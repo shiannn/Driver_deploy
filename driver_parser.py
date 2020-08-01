@@ -9,6 +9,7 @@ import json
 import psycopg2
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from apscheduler.scheduler import Scheduler
 
 import logging
 import sys
@@ -268,9 +269,14 @@ def bookTKB():
 
 MORNING_LOGIN = "11:55"
 #MIDNIGHT_LOGIN = "23:55"
-MIDNIGHT_LOGIN = "01:44"
+MIDNIGHT_LOGIN = "01:50"
+
+def printHello():
+    print('hello')
+
 def main():
     #bookTKB()
+    """
     import schedule
     schedule.every().day.at(MORNING_LOGIN).do(bookTKB)
     schedule.every().day.at(MIDNIGHT_LOGIN).do(bookTKB)
@@ -278,6 +284,13 @@ def main():
     logging.warning('running up...')
     while(True):
         schedule.run_pending()
+    """
+    sched = Scheduler()
+    sched.start()
+    sched.add_cron_job(printHello, hour='2', minute='24')
+    sched.add_cron_job(printHello, hour='2', minute='25')
+
+    app.run()
 
     
 if __name__ == '__main__':
