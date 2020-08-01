@@ -35,7 +35,7 @@ GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN")
 SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
 
 SLEEP_TIME = 240
-REST_THRESHOLD = 300
+REST_THRESHOLD = 600
 def getCourse(course_name, options_course):
     for coruse in options_course.options:
         if(coruse.text[:len(course_name)] == course_name):
@@ -117,6 +117,7 @@ def bookTKB():
 
     ### get config
     config = getConfig()
+    print(config)
 
     st = time.time()
     logging.warning('=== start {} ==='.format(st - st))
@@ -166,7 +167,7 @@ def bookTKB():
         logging.warning('something wrong on rest')
         return False
 
-    driver.save_screenshot('login.png')
+    #driver.save_screenshot('login.png')
     
     logging.warning('[sleeping {} minutes...]'.format(rest_time / 60))
     time.sleep(rest_time)
@@ -180,7 +181,7 @@ def bookTKB():
         logging.warning('fail to clear course page')
         return False
 
-    driver.save_screenshot('clear.png')
+    #driver.save_screenshot('clear.png')
 
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
@@ -221,7 +222,7 @@ def bookTKB():
             checked = True
             break
 
-    driver.save_screenshot('test.png')
+    #driver.save_screenshot('test.png')
 
     if not checked:
         logging.warning('no more session')
@@ -287,8 +288,8 @@ def main():
     """
     sched = Scheduler()
     sched.start()
-    sched.add_cron_job(bookTKB, hour=15, minute=21)
-    sched.add_cron_job(bookTKB, hour=15, minute=22)
+    sched.add_cron_job(bookTKB, hour=3, minute=50)
+    sched.add_cron_job(bookTKB, hour=15, minute=50)
 
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
