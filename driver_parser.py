@@ -12,9 +12,10 @@ from flask_sqlalchemy import SQLAlchemy
 
 import logging
 import sys
+import os
 logging.basicConfig(stream=sys.stdout, 
 format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
-
+"""
 try:
     with open('access.json', 'r') as f:
         access = json.load(f)
@@ -25,6 +26,12 @@ try:
 except:
     logging.warning('Please Add access json')
     exit(0)
+"""
+USERID = os.environ.get('USERID')
+PASSWORD = os.environ.get('PASSWORD')
+DRIVERLOCATION = os.environ.get('CHROMEDRIVER_PATH')
+GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN")
+SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
 
 SLEEP_TIME = 240
 REST_THRESHOLD = 300
@@ -102,6 +109,7 @@ def bookTKB():
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
+    options.binary_location = GOOGLE_CHROME_BIN
 
     driver = webdriver.Chrome(executable_path=DRIVERLOCATION, chrome_options=options) # 選擇Chrome瀏覽器
     driver.set_window_size(400, 1800)
