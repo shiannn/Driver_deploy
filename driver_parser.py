@@ -28,14 +28,16 @@ except:
     logging.warning('Please Add access json')
     exit(0)
 """
+
 USERID = os.environ.get('USERID')
 PASSWORD = os.environ.get('PASSWORD')
 DRIVERLOCATION = os.environ.get('CHROMEDRIVER_PATH')
 GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN")
 SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
 
+
 SLEEP_TIME = 240
-REST_THRESHOLD = 600
+REST_THRESHOLD = 300
 def getCourse(course_name, options_course):
     for coruse in options_course.options:
         if(coruse.text[:len(course_name)] == course_name):
@@ -158,12 +160,12 @@ def bookTKB():
     today = datetime.datetime.now()
     if today < datetime.datetime(today.year, today.month, today.day, 12 - 8, 0, 0):
         # morning, booking noon
-        rest_time = (datetime.datetime(today.year, today.month, today.day, 12 - 8, 0, 0) - today).seconds + 1
+        rest_time = (datetime.datetime(today.year, today.month, today.day, 12 - 8, 0, 0) - today).total_seconds() + 1
     else:
         # afternoon, booking midnight
-        rest_time = (datetime.datetime(today.year, today.month, today.day, 23 - 8, 59, 59) - today).seconds + 2
+        rest_time = (datetime.datetime(today.year, today.month, today.day, 23 - 8, 59, 59) - today).total_seconds() + 2
     
-    if rest_time > REST_THRESHOLD:
+    if rest_time > REST_THRESHOLD or rest_time < 0:
         logging.warning('something wrong on rest')
         return False
 
@@ -208,6 +210,12 @@ def bookTKB():
         return False
     options_branch.select_by_visible_text(position_name)
     logging.warning(position_name)
+
+    has_class=driver.find_elements_by_css_selector('input[type=checkbox][value=hasClass]')
+    
+    if len(has_class) != 0:
+        logging.warning('You already have seat')
+        return False
 
     all_checkboxs=driver.find_elements_by_css_selector('input[type=checkbox]')
     disabled_checkboxs=driver.find_elements_by_css_selector('input[type=checkbox][disabled]')
@@ -268,28 +276,12 @@ def bookTKB():
     ### Todo: put the root directory of program into config
     return True
 
-MORNING_LOGIN = "11:55"
-#MIDNIGHT_LOGIN = "23:55"
-MIDNIGHT_LOGIN = "01:50"
-
-def printHello():
-    print('hello')
-
 def main():
-    #bookTKB()
-    """
-    import schedule
-    schedule.every().day.at(MORNING_LOGIN).do(bookTKB)
-    schedule.every().day.at(MIDNIGHT_LOGIN).do(bookTKB)
-
-    logging.warning('running up...')
-    while(True):
-        schedule.run_pending()
-    """
     sched = Scheduler()
     sched.start()
-    sched.add_cron_job(bookTKB, hour=3, minute=50)
-    sched.add_cron_job(bookTKB, hour=15, minute=50)
+    sched.add_cron_job(bookTKB, hour=3, minute=55)
+    sched.add_cron_job(bookTKB, hour=15, minute=55)
+    #sched.add_cron_job(bookTKB, hour=0, minute=46, second=0)
 
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
