@@ -287,8 +287,8 @@ def main():
     """
     sched = Scheduler()
     sched.start()
-    sched.add_cron_job(printHello, hour=3, minute=5)
-    sched.add_cron_job(printHello, hour=3, minute=6)
+    sched.add_cron_job(printHello, hour=15, minute=11)
+    sched.add_cron_job(printHello, hour=15, minute=12)
 
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
