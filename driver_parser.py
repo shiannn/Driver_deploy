@@ -290,7 +290,8 @@ def main():
     sched.add_cron_job(printHello, hour=2, minute=54)
     sched.add_cron_job(printHello, hour=2, minute=55)
 
-    app.run()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
 
     
 if __name__ == '__main__':
