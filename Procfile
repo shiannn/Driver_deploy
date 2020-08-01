@@ -1,1 +1,1 @@
-web: python driver_parser.py
+web: gunicorn driver_parser:app –log-file -
