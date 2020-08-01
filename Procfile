@@ -1,1 +1,1 @@
-web: python3.6 driver_parser.py
+web: python driver_parser.py

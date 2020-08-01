@@ -268,7 +268,7 @@ def bookTKB():
 
 MORNING_LOGIN = "11:55"
 #MIDNIGHT_LOGIN = "23:55"
-MIDNIGHT_LOGIN = "21:20"
+MIDNIGHT_LOGIN = "01:44"
 def main():
     #bookTKB()
     import schedule
