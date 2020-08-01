@@ -156,12 +156,12 @@ def bookTKB():
     
     logging.warning('=== into_time ===')
     today = datetime.datetime.now()
-    if today < datetime.datetime(today.year, today.month, today.day, 12, 0, 0):
+    if today < datetime.datetime(today.year, today.month, today.day, 12 - 8, 0, 0):
         # morning, booking noon
-        rest_time = (datetime.datetime(today.year, today.month, today.day, 12, 0, 0) - today).seconds + 1
+        rest_time = (datetime.datetime(today.year, today.month, today.day, 12 - 8, 0, 0) - today).seconds + 1
     else:
         # afternoon, booking midnight
-        rest_time = (datetime.datetime(today.year, today.month, today.day, 23, 59, 59) - today).seconds + 2
+        rest_time = (datetime.datetime(today.year, today.month, today.day, 23 - 8, 59, 59) - today).seconds + 2
     
     if rest_time > REST_THRESHOLD:
         logging.warning('something wrong on rest')
