@@ -287,8 +287,8 @@ def main():
     """
     sched = Scheduler()
     sched.start()
-    sched.add_cron_job(printHello, hour='2', minute='39')
-    sched.add_cron_job(printHello, hour='2', minute='40')
+    sched.add_cron_job(printHello, hour=2, minute=49)
+    sched.add_cron_job(printHello, hour=2, minute=50)
 
     app.run()
 
