@@ -9,7 +9,8 @@ import json
 import psycopg2
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from apscheduler.scheduler import Scheduler
+#from apscheduler.scheduler import Scheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 import logging
 import sys
@@ -276,15 +277,23 @@ def bookTKB():
     ### Todo: put the root directory of program into config
     return True
 
+def printHello():
+    print('hello')
+    return
+
 def main():
-    sched = Scheduler()
+    #sched = Scheduler()
+    sched = BlockingScheduler()
+    #sched.add_cron_job(bookTKB, hour=3, minute=55)
+    #sched.add_cron_job(bookTKB, hour=15, minute=55)
+    sched.add_job(bookTKB, 'cron', hour=3, minute=55)
+    sched.add_job(bookTKB, 'cron', hour=15, minute=55)
+    sched.add_job(bookTKB, 'cron', hour=4, minute=52)
     sched.start()
-    sched.add_cron_job(bookTKB, hour=3, minute=55)
-    sched.add_cron_job(bookTKB, hour=15, minute=55)
     #sched.add_cron_job(bookTKB, hour=0, minute=46, second=0)
 
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    #port = int(os.environ.get('PORT', 5000))
+    #app.run(host='0.0.0.0', port=port)
 
     
 if __name__ == '__main__':

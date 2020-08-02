@@ -4,4 +4,4 @@ Flask==1.1.2
 #gunicorn
 psycopg2==2.8.5
 Flask-SQLAlchemy==2.4.4
-apscheduler==2.1.2
+APScheduler==3.0.0

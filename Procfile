@@ -1,1 +1,1 @@
-web: python driver_parser.py
+clock: python driver_parser.py
