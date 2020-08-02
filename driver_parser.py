@@ -282,19 +282,19 @@ def printHello():
     return
 
 def main():
-    #sched = Scheduler()
-    sched = BlockingScheduler()
-    #sched.add_cron_job(bookTKB, hour=3, minute=55)
-    #sched.add_cron_job(bookTKB, hour=15, minute=55)
-    sched.add_job(bookTKB, 'cron', hour=3, minute=55)
-    sched.add_job(bookTKB, 'cron', hour=15, minute=55)
-    sched.add_job(bookTKB, 'cron', hour=8, minute=12)
+    sched = Scheduler()
+    #sched = BlockingScheduler()
+    sched.add_cron_job(bookTKB, hour=3, minute=55)
+    sched.add_cron_job(bookTKB, hour=15, minute=55)
+    sched.add_cron_job(bookTKB, hour=8, minute=18)
+    #sched.add_job(bookTKB, 'cron', hour=3, minute=55)
+    #sched.add_job(bookTKB, 'cron', hour=15, minute=55)
+    #sched.add_job(bookTKB, 'cron', hour=8, minute=12)
     logging.warning('running...')
     sched.start()
-    #sched.add_cron_job(bookTKB, hour=0, minute=46, second=0)
 
-    #port = int(os.environ.get('PORT', 5000))
-    #app.run(host='0.0.0.0', port=port)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
 
     
 if __name__ == '__main__':
