@@ -74,6 +74,19 @@ def checkInPage(driver):
         except NoSuchElementException:
             time.sleep(1)
 
+def checkInLogin(driver):
+    login, sleep_times = False, 0
+    while(not login):
+        if sleep_times >= SLEEP_TIME:
+            return False
+        sleep_times += 1
+        try:
+            driver.find_element_by_id('id')
+            login = True
+            return True
+        except NoSuchElementException:
+            time.sleep(1)
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_DATABASE_URISQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -128,12 +141,15 @@ def bookTKB():
     connect_time = time.time()
     logging.warning('=== connected {} ==='.format(connect_time - st))
 
+    islogin = checkInLogin(driver)
+    if not islogin:
+        logging.warning('fail to login')
+        return False
+
     driver.find_element_by_id('id').click()
     driver.find_element_by_id('id').send_keys(USERID)
     driver.find_element_by_id('pwd').click()
     driver.find_element_by_id('pwd').send_keys(PASSWORD)
-
-
     driver.find_element_by_link_text('送出').click()
 
     get_submit_alert, sleep_times = False, 0
@@ -288,7 +304,8 @@ def main():
     sched.add_cron_job(bookTKB, hour=3, minute=55)
     sched.add_cron_job(bookTKB, hour=15, minute=55)
 
-    sched.add_cron_job(bookTKB, hour=8, minute=32)
+    sched.add_cron_job(bookTKB, hour=8, minute=57)
+    #sched.add_cron_job(bookTKB, hour=16, minute=50)
     #sched.add_job(bookTKB, 'cron', hour=3, minute=55)
     #sched.add_job(bookTKB, 'cron', hour=15, minute=55)
     #sched.add_job(bookTKB, 'cron', hour=8, minute=12)
