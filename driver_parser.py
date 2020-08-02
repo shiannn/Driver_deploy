@@ -284,15 +284,15 @@ def printHello():
 def main():
     sched = Scheduler()
     #sched = BlockingScheduler()
+    sched.start()
     sched.add_cron_job(bookTKB, hour=3, minute=55)
     sched.add_cron_job(bookTKB, hour=15, minute=55)
 
-    sched.add_cron_job(bookTKB, hour=8, minute=24)
+    sched.add_cron_job(bookTKB, hour=8, minute=32)
     #sched.add_job(bookTKB, 'cron', hour=3, minute=55)
     #sched.add_job(bookTKB, 'cron', hour=15, minute=55)
     #sched.add_job(bookTKB, 'cron', hour=8, minute=12)
     logging.warning('running...')
-    sched.start()
 
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
