@@ -288,7 +288,7 @@ def main():
     #sched.add_cron_job(bookTKB, hour=15, minute=55)
     sched.add_job(bookTKB, 'cron', hour=3, minute=55)
     sched.add_job(bookTKB, 'cron', hour=15, minute=55)
-    sched.add_job(bookTKB, 'cron', hour=4, minute=52)
+    sched.add_job(bookTKB, 'cron', hour=5, minute=5)
     sched.start()
     #sched.add_cron_job(bookTKB, hour=0, minute=46, second=0)
 
