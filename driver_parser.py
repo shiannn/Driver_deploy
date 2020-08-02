@@ -9,8 +9,8 @@ import json
 import psycopg2
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-#from apscheduler.scheduler import Scheduler
-from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.scheduler import Scheduler
+#from apscheduler.schedulers.blocking import BlockingScheduler
 
 import logging
 import sys
@@ -286,7 +286,8 @@ def main():
     #sched = BlockingScheduler()
     sched.add_cron_job(bookTKB, hour=3, minute=55)
     sched.add_cron_job(bookTKB, hour=15, minute=55)
-    sched.add_cron_job(bookTKB, hour=8, minute=18)
+
+    sched.add_cron_job(bookTKB, hour=8, minute=24)
     #sched.add_job(bookTKB, 'cron', hour=3, minute=55)
     #sched.add_job(bookTKB, 'cron', hour=15, minute=55)
     #sched.add_job(bookTKB, 'cron', hour=8, minute=12)
