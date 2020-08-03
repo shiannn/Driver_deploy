@@ -301,8 +301,8 @@ def main():
     sched = Scheduler()
     #sched = BlockingScheduler()
     sched.start()
-    sched.add_cron_job(bookTKB, hour=3, minute=55)
-    sched.add_cron_job(bookTKB, hour=15, minute=55)
+    sched.add_cron_job(bookTKB, hour=3, minute=50)
+    sched.add_cron_job(bookTKB, hour=15, minute=50)
 
     sched.add_cron_job(bookTKB, hour=8, minute=57)
     #sched.add_cron_job(bookTKB, hour=16, minute=50)
