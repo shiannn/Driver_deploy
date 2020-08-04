@@ -38,7 +38,7 @@ SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
 
 
 SLEEP_TIME = 240
-REST_THRESHOLD = 300
+REST_THRESHOLD = 600
 def getCourse(course_name, options_course):
     for coruse in options_course.options:
         if(coruse.text[:len(course_name)] == course_name):
